@@ -2,40 +2,12 @@ import os
 import datetime
 import sys
 import exifread
+from util_file import *
+from logd import *
+from os_cfg import *
 
-
-LOG_LEVEL_ERROR = 3
-LOG_LEVEL_WARN = 2
-LOG_LEVEL_NOTIFY = 1
-LOG_LEVEL_IGNORE = 0
-
-LOG_LEVEL_ENABLED = LOG_LEVEL_WARN
-
-
-if 1 >= len(sys.argv):
-    print('Not enough parameter: give path to process')
-    sys.exit()
-
-
-dir_path = sys.argv[1]
 
 ext_to_handle = ['jpg', 'png', 'mov', 'avi', 'mkv', 'mp4']
-
-
-def find_subdir(url):
-    q = [(url, 0)]
-    dirs = [url]
-
-    while q:
-        url, depth = q.pop(0)
-        dir_names = os.listdir(url)
-        for dir_name in dir_names:
-            full_url = os.path.join(url, dir_name)
-            if os.path.isdir(full_url):
-                q += (full_url, depth + 1),
-                dirs += full_url,
-
-    return dirs
 
 
 def get_shot_date(url):
@@ -57,11 +29,6 @@ def get_shot_date(url):
     return time
 
 
-def logd(opt, log):
-    if opt >= LOG_LEVEL_ENABLED:
-        print(log)
-
-
 def create_file_meta_info(file_list):
     files_to_handle = []
     for file in file_list:
@@ -79,7 +46,7 @@ def convert_file_name(dir_path):
     files_to_handle = create_file_meta_info(file_list)
 
     for file_name, file_type in files_to_handle:
-        file_url = dir_path + '\\' + file_name
+        file_url = dir_path + OSConfig.get_dir_delimiter() + file_name
         time = None
         logd(LOG_LEVEL_NOTIFY, file_url)
 
@@ -110,8 +77,14 @@ def convert_file_name(dir_path):
         logd(LOG_LEVEL_NOTIFY, '')
 
 
+def convert_file_names(opts):
+    try:
+        dir_path = opts["path"]
+    except KeyError:
+        print('ERROR: directory is not designated')
+        return None
 
-dirs = find_subdir(dir_path)
-for url in dirs:
-    convert_file_name(url)
+    dirs = UtilFile.find_subdirs(dir_path)
+    for url in dirs:
+        convert_file_name(url)
 
