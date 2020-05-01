@@ -25,11 +25,7 @@ def find_similar_files_in_a_directory(url, freq):
 
         file_stats = os.stat(file_url)
         size = file_stats.st_size//1024
-
         bitrate = 0
-        # if 'mp3' == file_ext:
-        #     f = MP3(file_url)
-        #     bitrate = f.info.bitrate / 1000
 
         freq[file_name] += MediaFileInfo(file_name, file_url, size, file_ext, bitrate),
 
