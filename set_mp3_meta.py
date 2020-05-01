@@ -26,6 +26,7 @@ def set_mp3_meta_in_a_dir(url):
 
         try:
             audio = EasyID3(file_url)
+            continue
         except mutagen.id3.ID3NoHeaderError:
             audio = mutagen.File(file_url, easy=True)
             audio.add_tags()
