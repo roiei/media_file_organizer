@@ -1,6 +1,6 @@
 
 
-## media fiel organizer
+## media file organizer
 
 
 ### Purpose
