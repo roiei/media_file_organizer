@@ -35,9 +35,12 @@ as of now, following features are supported with the tool
 
 ### Usage
 
-python main.py --cmd=convert --path=./
-python main.py --cmd=find_similar_files --path=./
-python main.py --cmd=set_mp3_meta --path=./
+> python main.py --cmd=convert --path=./
+
+> python main.py --cmd=find_similar_files --path=./
+
+> python main.py --cmd=set_mp3_meta --path=./
+
 
 * argument types
   * cmd
