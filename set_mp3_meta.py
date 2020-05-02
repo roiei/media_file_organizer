@@ -17,6 +17,10 @@ def set_mp3_meta_in_a_dir(url):
 
     for file_name, file_ext in files_to_handle:
         file_url = url + OSConfig.get_dir_delimiter() + file_name
+        file_stats = os.stat(file_url)
+        if not file_stats.st_size:
+            continue
+
         file_chunk = file_url.split(OSConfig.get_dir_delimiter())
         title = file_chunk[-1].split('.')
         title.pop()
@@ -27,6 +31,10 @@ def set_mp3_meta_in_a_dir(url):
         except mutagen.id3.ID3NoHeaderError:
             audio = mutagen.File(file_url, easy=True)
             audio.add_tags()
+        except mutagen.id3._util.ID3NoHeaderError:
+            continue
+        except mutagen.mp3.HeaderNotFoundError:
+            continue
 
         audio['title'] = title
         audio['artist'] = artist
