@@ -7,6 +7,7 @@ from option import *
 from file_rename import *
 from find_similar_files import *
 from set_mp3_meta import *
+from audio_converter import *
 
 
 cmd_handler = {}
@@ -14,6 +15,7 @@ cmd_handler['help']   = print_help
 cmd_handler['convert'] = convert_file_names
 cmd_handler['find_similar_files'] = find_similar_files
 cmd_handler['set_mp3_meta'] = set_mp3_meta
+cmd_handler['convert_codec'] = convert_audio_format
 
 sys_ver_info = tuple(list(sys.version_info)[:3])
 if sys_ver_info < (3, 5, 0):

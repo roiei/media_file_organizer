@@ -7,9 +7,6 @@ from logd import *
 from os_cfg import *
 
 
-ext_to_handle = ['jpg', 'png', 'mov', 'avi', 'mkv', 'mp4']
-
-
 def get_shot_date(url):
     time_keys = ['Image DateTime', 'EXIF DateTimeOriginal']
     f = open(url, 'rb')
@@ -28,22 +25,9 @@ def get_shot_date(url):
 
     return time
 
-
-def create_file_meta_info(file_list):
-    files_to_handle = []
-    for file in file_list:
-        ext = file.split('.')[-1].lower()
-        if ext not in ext_to_handle:
-            continue
-
-        files_to_handle += (file, ext),
-
-    return files_to_handle
-
-
 def convert_file_name(dir_path):
     file_list = os.listdir(dir_path)
-    files_to_handle = create_file_meta_info(file_list)
+    files_to_handle = UtilFile.create_file_meta_info(file_list)
 
     for file_name, file_type in files_to_handle:
         file_url = dir_path + OSConfig.get_dir_delimiter() + file_name

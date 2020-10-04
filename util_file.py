@@ -12,6 +12,9 @@ class FileType(Enum):
     PYTHON = 4
 
 
+ext_to_handle = ['jpg', 'png', 'mov', 'avi', 'mkv', 'mp4', 'xml']
+
+
 class UtilFile:
     def __init__(self):
         pass
@@ -107,3 +110,17 @@ class UtilFile:
 
         return files_to_handle
 
+    @staticmethod
+    def create_file_meta_info(file_list, extentions=None):
+        if not extentions:
+            extentions = ext_to_handle
+
+        files_to_handle = []
+        for file in file_list:
+            ext = file.split('.')[-1].lower()
+            if ext not in extentions:
+                continue
+
+            files_to_handle += (file, ext),
+
+        return files_to_handle
